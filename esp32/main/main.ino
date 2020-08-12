@@ -6,6 +6,7 @@
 #define I2C_SDA 21
 #define I2C_SCL 22
 #define SEALEVELPRESSURE_HPA (1013.25)
+#define WATER_SENSOR 4
 
 Adafruit_BME280 bme;
 BH1750 lightMeter(0x23);
@@ -13,8 +14,7 @@ BH1750 lightMeter(0x23);
 void setup() {
   Serial.begin(115200);
   pinMode(2, OUTPUT);
-  //pinMode(I2C_SDA, INPUT_PULLUP);
-  //pinMode(I2C_SCL, INPUT_PULLUP);
+  pinMode(WATER_SENSOR, INPUT);
 
   //init i2c
   Wire.begin(I2C_SDA, I2C_SCL);
@@ -42,6 +42,7 @@ void loop() {
   float pressure = bme.readPressure() / 100.0F;
   float altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
   float humidity = bme.readHumidity();
+  float water = analogRead(WATER_SENSOR);
   
   Serial.print("Light: ");
   Serial.println(lux);
@@ -61,6 +62,10 @@ void loop() {
   Serial.print("Pressure: ");
   Serial.print(pressure);
   Serial.println("hpa");
+
+  Serial.print("Water: ");
+  Serial.println(water);-
+
   Serial.println("---------------------------------");
   delay(1500);
 }
