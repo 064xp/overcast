@@ -7,25 +7,17 @@ admin.initializeApp();
 const app = express();
 app.use(cors({ origin: true }));
 
-app.get("/", (req, res) => {
-  functions.logger.log("Root route hit");
-  return res.status(200).send("Request succesfull");
-});
-
 app.post("/values", async (req, res) => {
-  const temp = req.query.temp;
+  const { temperature, humidity, light, waterLevel } = req.query;
+  const timeStamp = admin.firestore.FieldValue.serverTimestamp();
 
   const writeTemp = await admin
     .firestore()
     .collection("latest")
     .doc("latestData")
-    .set({ temperature: temp });
+    .set({ temperature, humidity, light, waterLevel, timeStamp });
 
-  functions.logger.log(writeTemp);
-
-  res.json({
-    result: `Wrote temperature: ${temp} succesfully`,
-  });
+  return res.status(200).send("Values updated");
 });
 
 exports.app = functions.https.onRequest(app);
