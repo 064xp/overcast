@@ -1,4 +1,8 @@
 #include <Wire.h>
+#include <WiFi.h>
+#include <WiFiMulti.h>
+#include <HTTPClient.h>
+
 #include <BH1750.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
@@ -8,6 +12,10 @@
 #define SEALEVELPRESSURE_HPA (1013.25)
 #define WATER_SENSOR 4
 
+#define SSID ""
+#define PASSWORD ""
+
+WiFiMulti WiFiMulti;
 Adafruit_BME280 bme;
 BH1750 lightMeter(0x23);
 
@@ -15,7 +23,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(2, OUTPUT);
   pinMode(WATER_SENSOR, INPUT);
-
+  
   //init i2c
   Wire.begin(I2C_SDA, I2C_SCL);
   
@@ -33,6 +41,20 @@ void setup() {
     Serial.println("Could not find a valid BME280 sensor, check wiring!");
     blinkLed();
   }
+
+  //init WiFi
+  WiFiMulti.addAP(SSID,PASSWORD);
+  Serial.print("Attempting to connect to ");
+  Serial.println(SSID);
+  
+  while (WiFiMulti.run() != WL_CONNECTED){
+    Serial.print(".");
+    digitalWrite(2, HIGH);
+    delay(100);
+    digitalWrite(2, LOW);
+    delay(300);
+  }
+  Serial.println("\nConnected");
   
 }
 
@@ -64,10 +86,32 @@ void loop() {
   Serial.println("hpa");
 
   Serial.print("Water: ");
-  Serial.println(water);-
+  Serial.println(water);
 
   Serial.println("---------------------------------");
-  delay(1500);
+  delay(800);
+}
+
+char sendValues(float light, float temp, float humidity, float waterLevel){
+  HTTPClient http;
+  int httpCode;
+  String lightStr = String(light), tempStr = String(temp), humidityStr = String(humidity), waterStr = String(waterLevel);
+  String url = "https://us-central1-overcast-8f35c.cloudfunctions.net/app/values";
+  String requestData = "?temperature=" + tempStr + "&humidity=" + humidityStr + "&light=" + lightStr + "&waterLevel=" + waterStr;
+    
+    http.begin(url);
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    httpCode = http.POST(requestData);
+    
+    if(httpCode > 0) {
+            Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+            if(httpCode == HTTP_CODE_OK) {
+                String payload = http.getString();
+                Serial.println(payload);
+            }
+        } else {
+            Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+        }
 }
 
 void blinkLed(){
