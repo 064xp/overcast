@@ -15,7 +15,7 @@ app.use(cors({ origin: true }));
 app.post("/values", async (req, res) => {
   const historyRef = admin.firestore().collection("history");
   let historic = await getLatestDoc(historyRef);
-  let newValues = constructNewValueObject(req.query);
+  let newValues = constructNewValueObject(req.body);
   let timeDelta = null;
   const maxTimeDelta = 60; //Time between every time values are pushed to history in minutes
 
