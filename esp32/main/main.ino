@@ -3,6 +3,8 @@
 #include <WiFiMulti.h>
 #include <HTTPClient.h>
 
+#include "credentials.h"
+
 #include <BH1750.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
@@ -12,8 +14,6 @@
 #define SEALEVELPRESSURE_HPA (1013.25)
 #define WATER_SENSOR 4
 #define WATER_SENSOR_PWR 2
-#define SSID ""
-#define PASSWORD ""
 
 WiFiMulti WiFiMulti;
 Adafruit_BME280 bme;
@@ -43,18 +43,18 @@ void setup() {
   }
 
   //init WiFi
-//  WiFiMulti.addAP(SSID,PASSWORD);
-//  Serial.print("Attempting to connect to ");
-//  Serial.println(SSID);
-//  
-//  while (WiFiMulti.run() != WL_CONNECTED){
-//    Serial.print(".");
-//    digitalWrite(2, HIGH);
-//    delay(100);
-//    digitalWrite(2, LOW);
-//    delay(300);
-//  }
-//  Serial.println("\nConnected");
+  WiFiMulti.addAP(SSID.c_str(), password.c_str());
+  Serial.print("Attempting to connect to ");
+  Serial.println(SSID);
+  
+  while (WiFiMulti.run() != WL_CONNECTED){
+    Serial.print(".");
+    digitalWrite(2, HIGH);
+    delay(100);
+    digitalWrite(2, LOW);
+    delay(300);
+  }
+  Serial.println("\nConnected");
   
 }
 
@@ -88,30 +88,33 @@ void loop() {
   Serial.print("Water: ");
   Serial.println(water);
 
+  Serial.println("Sending new values...");
+  sendValues(lux, temp, humidity, pressure, water);
   Serial.println("---------------------------------");
-  delay(800);
+  delay(3000);
 }
 
-char sendValues(float light, float temp, float humidity, float waterLevel){
+char sendValues(float light, float temp, float humidity, float pressure, float waterLevel){
   HTTPClient http;
   int httpCode;
   String lightStr = String(light), tempStr = String(temp), humidityStr = String(humidity), waterStr = String(waterLevel);
-  String url = "https://us-central1-overcast-8f35c.cloudfunctions.net/app/values";
-  String requestData = "?temperature=" + tempStr + "&humidity=" + humidityStr + "&light=" + lightStr + "&waterLevel=" + waterStr;
-    
+  String requestData = "temperature=" + tempStr + "&humidity=" + humidityStr + "&light=" + lightStr + "&waterLevel=" + waterStr;
+
+   Serial.println(url+'?'+requestData);
     http.begin(url);
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
     httpCode = http.POST(requestData);
     
     if(httpCode > 0) {
-            Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-            if(httpCode == HTTP_CODE_OK) {
-                String payload = http.getString();
-                Serial.println(payload);
-            }
-        } else {
-            Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-        }
+      Serial.printf("[HTTP] POST... code: %d\n", httpCode);
+      if(httpCode == HTTP_CODE_OK) {
+        String payload = http.getString();
+        Serial.println(payload);
+      }
+    } else {
+        Serial.printf("[HTTP] POST... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    }
+    http.end();
 }
 
 float readWaterLevel(){
