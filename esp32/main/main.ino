@@ -97,8 +97,8 @@ void loop() {
 char sendValues(float light, float temp, float humidity, float pressure, float waterLevel){
   HTTPClient http;
   int httpCode;
-  String lightStr = String(light), tempStr = String(temp), humidityStr = String(humidity), waterStr = String(waterLevel);
-  String requestData = "temperature=" + tempStr + "&humidity=" + humidityStr + "&light=" + lightStr + "&waterLevel=" + waterStr;
+  String lightStr = String(light), tempStr = String(temp), humidityStr = String(humidity), waterStr = String(waterLevel), pressureStr = String(pressure);
+  String requestData = "temperature=" + tempStr + "&humidity=" + humidityStr + "&light=" + lightStr + "&waterLevel=" + waterStr + "&pressure" + pressureStr;
   
   http.begin(url);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
