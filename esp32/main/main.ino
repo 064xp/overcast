@@ -11,7 +11,7 @@
 #define I2C_SCL 22
 #define SEALEVELPRESSURE_HPA (1013.25)
 #define WATER_SENSOR 4
-
+#define WATER_SENSOR_PWR 2
 #define SSID ""
 #define PASSWORD ""
 
@@ -43,18 +43,18 @@ void setup() {
   }
 
   //init WiFi
-  WiFiMulti.addAP(SSID,PASSWORD);
-  Serial.print("Attempting to connect to ");
-  Serial.println(SSID);
-  
-  while (WiFiMulti.run() != WL_CONNECTED){
-    Serial.print(".");
-    digitalWrite(2, HIGH);
-    delay(100);
-    digitalWrite(2, LOW);
-    delay(300);
-  }
-  Serial.println("\nConnected");
+//  WiFiMulti.addAP(SSID,PASSWORD);
+//  Serial.print("Attempting to connect to ");
+//  Serial.println(SSID);
+//  
+//  while (WiFiMulti.run() != WL_CONNECTED){
+//    Serial.print(".");
+//    digitalWrite(2, HIGH);
+//    delay(100);
+//    digitalWrite(2, LOW);
+//    delay(300);
+//  }
+//  Serial.println("\nConnected");
   
 }
 
@@ -64,7 +64,7 @@ void loop() {
   float pressure = bme.readPressure() / 100.0F;
   float altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
   float humidity = bme.readHumidity();
-  float water = analogRead(WATER_SENSOR);
+  float water = readWaterLevel();
   
   Serial.print("Light: ");
   Serial.println(lux);
@@ -112,6 +112,16 @@ char sendValues(float light, float temp, float humidity, float waterLevel){
         } else {
             Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
         }
+}
+
+float readWaterLevel(){
+  float waterLevel = 0.0;
+  
+  digitalWrite(WATER_SENSOR_PWR, HIGH);
+  waterLevel = analogRead(WATER_SENSOR);
+  digitalWrite(WATER_SENSOR_PWR, LOW);
+
+  return waterLevel;
 }
 
 void blinkLed(){
