@@ -1,0 +1,67 @@
+.topPanel {
+  /* height: 65vh; */
+  background-image: linear-gradient(#19164f, #7a479c);
+  padding: 1rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+#topPanel-temperature {
+  font-size: 8rem;
+  margin: 3rem 0 0 0;
+  font-weight: normal;
+}
+
+#topPanel-location {
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: normal;
+}
+
+.topPanel-additionalValues_value {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.topPanel-additionalValues {
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  margin: 3.5rem 0 0 0;
+}
+
+.topPanel-additionalValues_value img {
+  height: 2.5rem;
+}
+
+.topPanel-additionalValues_value p {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0.5rem 0 0 0;
+}
+
+.topPanel-dateTime {
+  margin: 5% 0 2rem 0;
+}
+
+.topPanel-dateTime_time {
+  font-size: 4rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+.topPanel-dateTime_time span {
+  font-size: 2rem;
+}
+
+.topPanel-dateTime_date {
+  margin: 0;
+  font-weight: normal;
+  font-size: 1.8rem;
+}
