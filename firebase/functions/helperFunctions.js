@@ -1,4 +1,5 @@
 const admin = require("firebase-admin");
+const functions = require("firebase-functions");
 
 exports.getLatestDoc = async (docRef) => {
   const querySnapshot = await docRef
@@ -15,8 +16,19 @@ exports.getLatestDoc = async (docRef) => {
 exports.constructNewValueObject = (queryParams) => {
   let newValues = {};
   Object.keys(queryParams).map((key, index) => {
-    newValues[key] = Number(queryParams[key]);
+    if (key !== "apiKey") {
+      newValues[key] = Number(queryParams[key]);
+    }
   });
   newValues.timeStamp = admin.firestore.FieldValue.serverTimestamp();
   return newValues;
+};
+
+exports.validateApiKey = async (apiKey, apiKeysRef) => {
+  if (!apiKey) {
+    return false;
+  }
+  const querySnapshot = await apiKeysRef.where("apiKey", "==", apiKey).get();
+
+  return !querySnapshot.empty;
 };

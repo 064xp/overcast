@@ -6,13 +6,20 @@ const admin = require("firebase-admin");
 const {
   getLatestDoc,
   constructNewValueObject,
+  validateApiKey,
 } = require("./helperFunctions.js");
 
 admin.initializeApp();
 const app = express();
 app.use(cors({ origin: true }));
+const apiKeysRef = admin.firestore().collection("apiKeys");
 
 app.post("/values", async (req, res) => {
+  const isValidApiKey = await validateApiKey(req.body.apiKey, apiKeysRef);
+  if (!isValidApiKey) {
+    return res.status(401).send("Invalid API Key");
+  }
+
   const historyRef = admin.firestore().collection("history");
   let historic = await getLatestDoc(historyRef);
   let newValues = constructNewValueObject(req.body);
