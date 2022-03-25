@@ -100,7 +100,7 @@ char sendValues(float light, float temp, float humidity, float pressure, float w
   String lightStr = String(light), tempStr = String(temp), humidityStr = String(humidity), waterStr = String(waterLevel), pressureStr = String(pressure);
   String requestData = "temperature=" + tempStr + "&humidity=" + humidityStr + "&light=" + lightStr + "&waterLevel=" + waterStr + "&pressure" + pressureStr;
   
-  http.begin(url);
+  http.begin(url + "values/");
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   httpCode = http.POST(requestData);
   

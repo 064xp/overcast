@@ -30,5 +30,7 @@ exports.validateApiKey = async (apiKey, apiKeysRef) => {
   }
   const querySnapshot = await apiKeysRef.where("apiKey", "==", apiKey).get();
 
-  return !querySnapshot.empty;
+  if (querySnapshot.empty) return false;
+
+  return querySnapshot.docs[0].data().station;
 };

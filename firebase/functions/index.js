@@ -15,29 +15,29 @@ app.use(cors({ origin: true }));
 const apiKeysRef = admin.firestore().collection("apiKeys");
 
 app.post("/values", async (req, res) => {
-  const isValidApiKey = await validateApiKey(req.body.apiKey, apiKeysRef);
-  if (!isValidApiKey) {
+  const stationRef = await validateApiKey(req.body.apiKey, apiKeysRef);
+  if (!stationRef) {
     return res.status(401).send("Invalid API Key");
   }
 
-  const historyRef = admin.firestore().collection("history");
-  let historic = await getLatestDoc(historyRef);
+  // const historyRef = admin.firestore().collection("history");
+  // let historic = await getLatestDoc(historyRef);
   let newValues = constructNewValueObject(req.body);
-  let timeDelta = null;
-  const maxTimeDelta = 60; //Time between every time values are pushed to history in minutes
+  // let timeDelta = null;
+  // const maxTimeDelta = 60; //Time between every time values are pushed to history in minutes
 
   //if there is at least one document in the history
-  if (historic) {
-    //time between now and the last saved values in history in MINUTES
-    timeDelta = (Date.now() - historic.timeStamp.toDate()) / 1000 / 60;
-  }
+  // if (historic) {
+  //   //time between now and the last saved values in history in MINUTES
+  //   timeDelta = (Date.now() - historic.timeStamp.toDate()) / 1000 / 60;
+  // }
 
   //Push values to history every hour or if there is nothing in history
-  if (timeDelta >= maxTimeDelta || timeDelta === null) {
-    historyRef.add(newValues);
-  }
+  // if (timeDelta >= maxTimeDelta || timeDelta === null) {
+  //   historyRef.add(newValues);
+  // }
 
-  await admin.firestore().collection("latest").doc("latestData").set(newValues);
+  await stationRef.set(newValues);
   return res.status(200).send("Values updated");
 });
 
