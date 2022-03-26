@@ -86,21 +86,33 @@ void loop() {
   Serial.println(water);
 
   Serial.println("Sending new values...");
-  // sendValues(lux, temp, humidity, pressure, water);
+  sendValues(lux, temp, humidity, pressure, water);
   Serial.println("---------------------------------");
-  delay(3000);
+  delay(5000);
 }
 
 void sendValues(float light, float temp, float humidity, float pressure, float waterLevel){
   HTTPClient http;
   int httpCode;
-  String lightStr = String(light), tempStr = String(temp), humidityStr = String(humidity), waterStr = String(waterLevel), pressureStr = String(pressure);
-  String requestData = "temperature=" + tempStr + "&humidity=" + humidityStr + "&light=" + lightStr + "&waterLevel=" + waterStr + "&pressure" + pressureStr;
+  String
+    lightStr = String(light), 
+    tempStr = String(temp), 
+    humidityStr = String(humidity), 
+    waterStr = String(waterLevel), 
+    pressureStr = String(pressure);
+
+  String requestData = 
+    "temperature=" + tempStr + 
+    "&humidity=" + humidityStr + 
+    "&light=" + lightStr + 
+    "&waterLevel=" + waterStr + 
+    "&pressure" + pressureStr +
+    "&apiKey=" + apiKey;
   
-  http.begin(client, url + "values/");
+  http.begin(client, url + "/values");
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   httpCode = http.POST(requestData);
-  
+
   if(httpCode > 0) {
     Serial.printf("[HTTP] POST... code: %d\n", httpCode);
     if(httpCode == HTTP_CODE_OK) {
@@ -110,6 +122,7 @@ void sendValues(float light, float temp, float humidity, float pressure, float w
   } else {
       Serial.printf("[HTTP] POST... failed, error: %s\n", http.errorToString(httpCode).c_str());
   }
+
   http.end();
 }
 
