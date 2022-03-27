@@ -8,6 +8,7 @@ import humidityIcon from "../../assets/icons/humidity.svg";
 import pressureIcon from "../../assets/icons/pressure.svg";
 import sunIcon from "../../assets/icons/sun.svg";
 import waterIcon from "../../assets/icons/waterLevel.svg";
+import { padNumber } from "../../utils/numberUtils";
 
 const station = "AIDPK2SOU4ZUWamXkOLp";
 
@@ -17,13 +18,10 @@ const TopInfoPanel = (props) => {
   const unSubscribe = useRef(null);
 
   const onSnap = (snapshot) => {
-    console.log("snapshot", snapshot.data());
+    setValues(snapshot.data());
   };
 
   useEffect(() => {
-    // latestRef.onSnapshot((doc) => {
-    //   setValues(doc.data());
-    // });
     unSubscribe.current = onSnapshot(doc(db, "stations", station), onSnap);
 
     updateDateTime();
@@ -38,8 +36,8 @@ const TopInfoPanel = (props) => {
       day: "numeric",
     };
     const current = new Date();
-    const hours = String(current.getHours() % 12 || 12);
-    const minutes = String(current.getMinutes());
+    const hours = padNumber(String(current.getHours() % 12 || 12), 2);
+    const minutes = padNumber(String(current.getMinutes()), 2);
     const amPm = current.getHours() >= 12 ? "PM" : "AM";
     const dateString = current
       .toLocaleDateString("en-US", formatOptions)
