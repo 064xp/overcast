@@ -106,7 +106,7 @@ void sendValues(float light, float temp, float humidity, float pressure, float w
     "&humidity=" + humidityStr + 
     "&light=" + lightStr + 
     "&waterLevel=" + waterStr + 
-    "&pressure" + pressureStr +
+    "&pressure=" + pressureStr +
     "&apiKey=" + apiKey;
   
   http.begin(client, url + "/values");
