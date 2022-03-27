@@ -37,7 +37,7 @@ app.post("/values", async (req, res) => {
   //   historyRef.add(newValues);
   // }
 
-  await stationRef.set(newValues);
+  await stationRef.set(newValues, { merge: true });
   return res.status(200).send("Values updated");
 });
 

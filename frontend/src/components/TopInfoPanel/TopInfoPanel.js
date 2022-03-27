@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
-import { latestRef } from "../../firebase/firebase";
 import "./topInfoPanel.css";
 import humidityIcon from "../../assets/icons/humidity.svg";
 import pressureIcon from "../../assets/icons/pressure.svg";
 import sunIcon from "../../assets/icons/sun.svg";
 import waterIcon from "../../assets/icons/waterLevel.svg";
 
+const station = "AIDPK2SOU4ZUWamXkOLp";
+
 const TopInfoPanel = (props) => {
   const [values, setValues] = useState({});
   const [dateTime, setDateTime] = useState({});
+  const unSubscribe = useRef(null);
+
+  const onSnap = (snapshot) => {
+    console.log("snapshot", snapshot.data());
+  };
 
   useEffect(() => {
-    latestRef.onSnapshot((doc) => {
-      setValues(doc.data());
-    });
+    // latestRef.onSnapshot((doc) => {
+    //   setValues(doc.data());
+    // });
+    unSubscribe.current = onSnapshot(doc(db, "stations", station), onSnap);
 
     updateDateTime();
     setInterval(updateDateTime, 1000);
