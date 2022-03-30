@@ -6,8 +6,8 @@
   margin: 0.5em 0 0 0;
   align-self: center;
   text-align: center;
-  font-size: 1.1em;
   /* font-weight: bold; */
+  font-size: 1.3em;
 
   background-color: #19164f;
 }
@@ -43,12 +43,13 @@
 
 .stationInfo-value img {
   height: 2em;
+  margin-bottom: 0.2em;
 }
 .stationInfo-value h2 {
   color: white;
   margin: 0;
   font-weight: normal;
-  font-size: 1em;
+  font-size: 1.4em;
 }
 
 .stationInfo-body {
@@ -67,7 +68,7 @@
 }
 
 .stationInfo-temperature {
-  font-size: 2em;
+  font-size: 2.5em;
   margin: 0 0 0.5em 0;
   font-weight: normal;
   color: white;
@@ -90,7 +91,7 @@
   border: 2px solid #19164f;
   border-radius: 99px;
   cursor: pointer;
-  font-size: 1.1em;
+  font-size: 1.3em;
   width: 100%;
   margin: 1em 0 0 0;
   padding: 0.3em;

@@ -14,9 +14,18 @@
   box-sizing: border-box;
 }
 
+.topPanel-infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-grow: 1;
+}
+
 #topPanel-temperature {
-  font-size: 7rem;
-  margin: 1rem 0 0 0;
+  font-size: clamp(4rem, 10vw, 7rem);
+  margin: 0 0 0 0;
   font-weight: normal;
 }
 
@@ -28,10 +37,12 @@
 
 .topPanel-additionalValues {
   display: flex;
-  width: 40%;
-  min-width: 450px;
-  justify-content: space-between;
+  /* width: 40%; */
+  /* min-width: 450px; */
+  justify-content: center;
+  align-items: center;
   margin: 3.5rem 0 0 0;
+  flex-wrap: wrap;
 }
 
 .topPanel-additionalValues_value {
@@ -39,6 +50,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0.5em 1.5em;
 }
 
 .topPanel-additionalValues_value img {
