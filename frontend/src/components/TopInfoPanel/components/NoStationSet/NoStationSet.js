@@ -5,7 +5,7 @@ import "./noStationSet.css";
 
 const NoStationSet = () => {
   return (
-    <div>
+    <div className="topPanel-mainContainer">
       <h2>No station selected</h2>
       <div className="noStation-button">
         <Link to="/map">

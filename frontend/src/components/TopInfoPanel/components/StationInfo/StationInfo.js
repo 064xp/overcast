@@ -7,7 +7,7 @@ import "../../topInfoPanel.css";
 
 const StationInfo = ({ values }) => {
   return (
-    <div className="topPanel-infoContainer">
+    <div className="topPanel-mainContainer">
       <div className="topPanel-tempLocation">
         <h1 id="topPanel-temperature">{values.temperature}°</h1>
         {/* <h5 id="topPanel-location">Zapopan, Jalisco</h5> */}

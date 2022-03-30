@@ -14,7 +14,7 @@
   box-sizing: border-box;
 }
 
-.topPanel-infoContainer {
+.topPanel-mainContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
