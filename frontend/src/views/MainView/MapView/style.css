@@ -1,0 +1,48 @@
+.mapHeader {
+  background: #141e30; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #243b55,
+    #141e30
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #243b55,
+    #141e30
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  padding: 0.5em 2em 1em 1em;
+  box-sizing: border-box;
+  border-radius: 0 0 12px 0;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.mapHeader_title {
+  margin: 0;
+  color: white;
+  font-weight: normal;
+}
+
+.mapHeader_subtitle {
+  margin: 0;
+  color: #dbdbdb;
+  font-weight: normal;
+}
+
+.mapView-backBtn {
+  background-color: #4d729c;
+  border-radius: 999px;
+  width: 1.3em;
+  padding: 0.5em;
+  margin-right: 1em;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
+}

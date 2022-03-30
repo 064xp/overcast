@@ -8,22 +8,31 @@ function App() {
   const [defaultStation, setDefaultStation] = useState(null);
   useEffect(() => {
     // get station from localstorage
-    const defaultStation = localStorage.getItem("defaultStation");
+    const cachedStation = localStorage.getItem("defaultStation");
+    setDefaultStation(cachedStation);
   }, []);
+
+  const changeDefaultStation = (station) => {
+    setDefaultStation(station);
+    localStorage.setItem("defaultStation", station);
+  };
 
   return (
     <div>
       <Routes>
         <Route
           path="/"
+          element={<MainView defaultStation={defaultStation} />}
+        />
+        <Route
+          path="map"
           element={
-            <MainView
+            <MapView
               defaultStation={defaultStation}
-              setDefaultStation={setDefaultStation}
+              setDefaultStation={changeDefaultStation}
             />
           }
         />
-        <Route path="map" element={<MapView />} />
       </Routes>
     </div>
   );

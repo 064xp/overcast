@@ -12,7 +12,7 @@ import { padNumber } from "../../utils/numberUtils";
 
 const station = "AIDPK2SOU4ZUWamXkOLp";
 
-const TopInfoPanel = ({ defaultStation, setDefaultStation }) => {
+const TopInfoPanel = ({ defaultStation }) => {
   const [values, setValues] = useState({});
   const [dateTime, setDateTime] = useState({});
   const unSubscribe = useRef(null);
