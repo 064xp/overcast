@@ -9,7 +9,7 @@ const StationInfo = ({ values }) => {
   return (
     <div className="topPanel-mainContainer">
       <div className="topPanel-tempLocation">
-        <h1 id="topPanel-temperature">{values.temperature}°</h1>
+        <h1 id="topPanel-temperature">{values.temperature}°C</h1>
         {/* <h5 id="topPanel-location">Zapopan, Jalisco</h5> */}
         <h5 id="topPanel-location">{values.name}</h5>
       </div>
