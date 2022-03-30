@@ -55,7 +55,8 @@ const TopInfoPanel = (props) => {
     <div className="topPanel">
       <div className="topPanel-tempLocation">
         <h1 id="topPanel-temperature">{values.temperature}°</h1>
-        <h5 id="topPanel-location">Zapopan, Jalisco</h5>
+        {/* <h5 id="topPanel-location">Zapopan, Jalisco</h5> */}
+        <h5 id="topPanel-location">{values.name}</h5>
       </div>
       <div className="topPanel-additionalValues">
         <div className="topPanel-additionalValues_value" title="Humidity">
