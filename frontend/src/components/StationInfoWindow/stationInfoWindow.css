@@ -1,0 +1,103 @@
+.stationInfo-chip {
+  box-sizing: border-box;
+  border-radius: 6px;
+  color: white;
+  padding: 0.2em 0.5em;
+  margin: 0.5em 0 0 0;
+  align-self: center;
+  text-align: center;
+  font-size: 1.1em;
+  /* font-weight: bold; */
+
+  background-color: #19164f;
+}
+
+.stationInfo-header::after {
+  content: "";
+  background: #41295a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #2f0743,
+    #41295a
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #2f0743,
+    #41295a
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 2px;
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+.stationInfo-header h1 {
+  margin: 0;
+  text-align: center;
+  font-weight: normal;
+}
+
+.stationInfo-value {
+  margin: 0 0.5em;
+}
+
+.stationInfo-value img {
+  height: 2em;
+}
+.stationInfo-value h2 {
+  color: white;
+  margin: 0;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.stationInfo-body {
+  background-color: #7a479c;
+  background-image: linear-gradient(#19164f, #7a479c);
+  border-radius: 8px;
+  padding: 1em;
+  margin-top: 1em;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+}
+
+.stationInfo-temperature {
+  font-size: 2em;
+  margin: 0 0 0.5em 0;
+  font-weight: normal;
+  color: white;
+}
+
+.stationInfo-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1.3em;
+}
+
+.stationInfo-row:last-child {
+  margin-bottom: 0;
+}
+
+.stationInfo-setDefaultBtn {
+  background-color: white;
+  color: #19164f;
+  display: block;
+  border: 2px solid #19164f;
+  border-radius: 99px;
+  cursor: pointer;
+  font-size: 1.1em;
+  width: 100%;
+  margin: 1em 0 0 0;
+  padding: 0.3em;
+  transition: all 200ms ease-in-out;
+}
+
+.stationInfo-setDefaultBtn:hover {
+  color: white;
+  background-color: #19164f;
+}
