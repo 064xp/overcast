@@ -1,16 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
+import StationInfo from "./components/StationInfo/StationInfo";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
-
 import "./topInfoPanel.css";
-import humidityIcon from "../../assets/icons/humidity.svg";
-import pressureIcon from "../../assets/icons/pressure.svg";
-import sunIcon from "../../assets/icons/sun.svg";
-import waterIcon from "../../assets/icons/waterLevel.svg";
 import { padNumber } from "../../utils/numberUtils";
-
-const station = "AIDPK2SOU4ZUWamXkOLp";
+import NoStationSet from "./components/NoStationSet/NoStationSet";
 
 const TopInfoPanel = ({ defaultStation }) => {
   const [values, setValues] = useState({});
@@ -24,7 +19,6 @@ const TopInfoPanel = ({ defaultStation }) => {
   };
 
   useEffect(() => {
-    unSubscribe.current = onSnapshot(doc(db, "stations", station), onSnap);
     const cachedValues = localStorage.getItem("cachedValues")
       ? JSON.parse(localStorage.getItem("cachedValues"))
       : {};
@@ -33,6 +27,19 @@ const TopInfoPanel = ({ defaultStation }) => {
     updateDateTime();
     setInterval(updateDateTime, 1000);
   }, []);
+
+  useEffect(() => {
+    if (!defaultStation) return;
+
+    if (unSubscribe.current) {
+      unSubscribe.current();
+    }
+
+    unSubscribe.current = onSnapshot(
+      doc(db, "stations", defaultStation),
+      onSnap
+    );
+  }, [defaultStation]);
 
   const updateDateTime = () => {
     const formatOptions = {
@@ -59,32 +66,13 @@ const TopInfoPanel = ({ defaultStation }) => {
 
   return (
     <div className="topPanel">
-      <div className="topPanel-tempLocation">
-        <h1 id="topPanel-temperature">{values.temperature}°</h1>
-        {/* <h5 id="topPanel-location">Zapopan, Jalisco</h5> */}
-        <h5 id="topPanel-location">{values.name}</h5>
-      </div>
-      <div className="topPanel-additionalValues">
-        <div className="topPanel-additionalValues_value" title="Humidity">
-          <img src={humidityIcon} alt="humidity" />
-          <p>{values.humidity}%</p>
-        </div>
-        <div className="topPanel-additionalValues_value" title="Pressure">
-          <img src={pressureIcon} alt="Pressure" />
-          <p>{values.pressure} hpa</p>
-        </div>
-        <div
-          className="topPanel-additionalValues_value"
-          title="Rain Water Level"
-        >
-          <img src={waterIcon} alt="Rain Level" />
-          <p>{values.waterLevel} cm</p>
-        </div>
-        <div className="topPanel-additionalValues_value" title="Light level">
-          <img src={sunIcon} alt="Light Level" />
-          <p>{values.light} lux</p>
-        </div>
-      </div>
+      {defaultStation ? (
+        <>
+          <StationInfo values={values} />
+        </>
+      ) : (
+        <NoStationSet />
+      )}
       <div className="topPanel-dateTime">
         <h4 className="topPanel-dateTime_time">
           {dateTime.hours}:{dateTime.minutes}

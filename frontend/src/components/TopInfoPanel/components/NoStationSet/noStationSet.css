@@ -1,0 +1,26 @@
+.noStation-button {
+  border: 2px solid #fff;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.103);
+  transition: all 250ms ease-in-out;
+  padding: 0.5em 1.5em;
+}
+
+.noStation-button:hover {
+  background-color: rgba(255, 255, 255, 0.205);
+  transform: scale(1.04);
+}
+
+.noStation-button h3 {
+  text-decoration: none;
+  color: white;
+  font-weight: normal;
+  font-size: 1.4rem;
+}
+
+.noStation-button img {
+  text-decoration: none;
+  color: white;
+  font-weight: normal;
+  width: 8rem;
+}
