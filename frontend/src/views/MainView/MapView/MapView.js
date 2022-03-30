@@ -23,7 +23,7 @@ const MapView = ({ defaultStation, setDefaultStation }) => {
   const mapURL = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GMAPS_KEY}`;
 
   useEffect(() => {
-    // queryStations();
+    queryStations();
   }, []);
 
   const queryStations = async () => {
