@@ -1,5 +1,6 @@
 import React from "react";
 import InfoWindow from "react-google-maps/lib/components/InfoWindow";
+import { useNavigate } from "react-router-dom";
 
 const StationInfoWindow = ({
   station,
@@ -7,8 +8,11 @@ const StationInfoWindow = ({
   setDefaultStation,
   ...props
 }) => {
+  const navigate = useNavigate();
+
   const onStationSelected = () => {
     setDefaultStation(station.id);
+    navigate("/");
   };
 
   return (
