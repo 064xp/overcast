@@ -70,3 +70,27 @@
   font-weight: normal;
   font-size: 1.8rem;
 }
+
+.topPanel-mapBtn {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  background-color: #2d3436;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  padding: 0.6rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.5);
+  transition: all 100ms ease-in-out;
+}
+
+.topPanel-mapBtn:hover {
+  box-shadow: 0 0 0.5rem 0.1em rgba(0, 0, 0, 0.37);
+  transform: scale(1.05);
+}

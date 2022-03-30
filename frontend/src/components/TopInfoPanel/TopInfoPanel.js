@@ -6,6 +6,8 @@ import { db } from "../../firebase/firebase";
 import "./topInfoPanel.css";
 import { padNumber } from "../../utils/numberUtils";
 import NoStationSet from "./components/NoStationSet/NoStationSet";
+import { Link } from "react-router-dom";
+import mapIcon from "../../assets/icons/map.svg";
 
 const TopInfoPanel = ({ defaultStation }) => {
   const [values, setValues] = useState({});
@@ -80,6 +82,10 @@ const TopInfoPanel = ({ defaultStation }) => {
         </h4>
         <h5 className="topPanel-dateTime_date">{dateTime.dateString}</h5>
       </div>
+
+      <Link className="topPanel-mapBtn" to="/map">
+        <img src={mapIcon} alt="Map" />
+      </Link>
     </div>
   );
 };
