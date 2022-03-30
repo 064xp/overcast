@@ -9,7 +9,9 @@
   align-items: center;
   text-align: center;
   position: relative;
-  height: 80vh;
+  /* height: 80vh; */
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 #topPanel-temperature {

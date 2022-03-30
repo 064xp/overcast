@@ -27,7 +27,7 @@ const StationInfo = ({ values }) => {
           title="Rain Water Level"
         >
           <img src={waterIcon} alt="Rain Level" />
-          <p>{values.waterLevel} cm</p>
+          <p>{values.waterLevel} mm</p>
         </div>
         <div className="topPanel-additionalValues_value" title="Light level">
           <img src={sunIcon} alt="Light Level" />

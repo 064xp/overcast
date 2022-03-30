@@ -48,7 +48,7 @@ const StationInfoWindow = ({
           <div className="stationInfo-row">
             <div className="stationInfo-value">
               <img src={waterIcon} alt="rain" />
-              <h2>{station.waterLevel} cm</h2>
+              <h2>{station.waterLevel} mm</h2>
             </div>
 
             <div className="stationInfo-value">
