@@ -1,11 +1,14 @@
 import React from "react";
 import TopInfoPanel from "../../components/TopInfoPanel/TopInfoPanel";
 
-const MainView = () => {
+const MainView = ({ defaultStation, setDefaultStation }) => {
   return (
     <div>
       <section>
-        <TopInfoPanel />
+        <TopInfoPanel
+          defaultStation={defaultStation}
+          setDefaultStation={setDefaultStation}
+        />
       </section>
     </div>
   );

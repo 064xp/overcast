@@ -12,17 +12,23 @@ import { padNumber } from "../../utils/numberUtils";
 
 const station = "AIDPK2SOU4ZUWamXkOLp";
 
-const TopInfoPanel = (props) => {
+const TopInfoPanel = ({ defaultStation, setDefaultStation }) => {
   const [values, setValues] = useState({});
   const [dateTime, setDateTime] = useState({});
   const unSubscribe = useRef(null);
 
   const onSnap = (snapshot) => {
-    setValues(snapshot.data());
+    const data = snapshot.data();
+    setValues(data);
+    localStorage.setItem("cachedValues", JSON.stringify(data));
   };
 
   useEffect(() => {
     unSubscribe.current = onSnapshot(doc(db, "stations", station), onSnap);
+    const cachedValues = localStorage.getItem("cachedValues")
+      ? JSON.parse(localStorage.getItem("cachedValues"))
+      : {};
+    setValues(cachedValues);
 
     updateDateTime();
     setInterval(updateDateTime, 1000);
