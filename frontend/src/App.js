@@ -1,13 +1,16 @@
 import React from "react";
 import "./App.css";
-import TopInfoPanel from "./components/TopInfoPanel/TopInfoPanel";
+import MainView from "./views/MainView/MainView";
+import MapView from "./views/MainView/MapView/MapView";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div>
-      <section>
-        <TopInfoPanel />
-      </section>
+      <Routes>
+        <Route path="/" element={<MainView />} />
+        <Route path="map" element={<MapView />} />
+      </Routes>
     </div>
   );
 }
