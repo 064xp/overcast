@@ -128,10 +128,7 @@ void sendValues(float light, float temp, float humidity, float pressure, float w
 
 float readWaterLevel(){
   float analogVal = 0.0;
-  
-  digitalWrite(WATER_SENSOR_PWR, HIGH);
   analogVal = analogRead(WATER_SENSOR);
-  digitalWrite(WATER_SENSOR_PWR, LOW);
 
   return constrain(map(analogVal, 100, 560, 0, 41), 0, 999);;
 }
