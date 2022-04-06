@@ -10,11 +10,23 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 
+#include <SPI.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_PCD8544.h>
+
 #define I2C_SDA D2
 #define I2C_SCL D1
 #define SEALEVELPRESSURE_HPA (1013.25)
 #define WATER_SENSOR A0
 #define WATER_SENSOR_PWR S2
+
+int RST = 16;
+int CE = 14;
+int DC= 12;
+int DIN = 13;
+int CLK = 15;
+
+Adafruit_PCD8544 display = Adafruit_PCD8544(CLK, DIN, DC, CE, RST);
 
 Adafruit_BME280 bme;
 BH1750 lightMeter(0x23);
@@ -25,6 +37,15 @@ void setup() {
   pinMode(2, OUTPUT);
   pinMode(WATER_SENSOR, INPUT);
   
+  display.begin();
+  display.setContrast(50);
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(BLACK);
+  display.setCursor(0,0);
+  display.print("Connecting to WiFi " + String(SSID));
+  display.display();
+
   //init i2c
   Wire.begin(I2C_SDA, I2C_SCL);
   
@@ -51,6 +72,12 @@ void setup() {
     Serial.print(".");
     delay(500);
   }
+
+  display.clearDisplay();
+  display.setCursor(0,0);
+  display.print("Connected to \n" + SSID);
+  display.display();
+  delay(1000);
   Serial.print("\nConnected! IP Address (AP): ");
   Serial.println(WiFi.localIP());
 }
@@ -84,6 +111,8 @@ void loop() {
 
   Serial.print("Water: ");
   Serial.println(water);
+
+  weatherDisplay(lux, temp, pressure, altitude, humidity, water);
 
   Serial.println("Sending new values...");
   sendValues(lux, temp, humidity, pressure, water);
@@ -140,4 +169,20 @@ void blinkLed(){
       digitalWrite(2, LOW);
       delay(800);
   }
+}
+
+void weatherDisplay(float lux, float temp, float pressure, float altitude, float humidity, float water){
+  display.setTextSize(1);
+  display.setTextColor(BLACK);
+  display.setCursor(0,0);
+  display.clearDisplay();
+
+  display.println("LIGHT: " + String(lux));
+  display.println("TEMP: " + String(temp));
+  display.println("ATM: " + String(pressure));
+  display.println("ALT: " + String(altitude));
+  display.println("HUM: " + String(humidity));
+  display.println("WATER: " + String(water));
+
+  display.display();
 }
