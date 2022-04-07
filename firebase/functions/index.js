@@ -20,23 +20,7 @@ app.post("/values", async (req, res) => {
     return res.status(401).send("Invalid API Key");
   }
 
-  // const historyRef = admin.firestore().collection("history");
-  // let historic = await getLatestDoc(historyRef);
   let newValues = constructNewValueObject(req.body);
-  // let timeDelta = null;
-  // const maxTimeDelta = 60; //Time between every time values are pushed to history in minutes
-
-  //if there is at least one document in the history
-  // if (historic) {
-  //   //time between now and the last saved values in history in MINUTES
-  //   timeDelta = (Date.now() - historic.timeStamp.toDate()) / 1000 / 60;
-  // }
-
-  //Push values to history every hour or if there is nothing in history
-  // if (timeDelta >= maxTimeDelta || timeDelta === null) {
-  //   historyRef.add(newValues);
-  // }
-
   await stationRef.set(newValues, { merge: true });
   return res.status(200).send("Values updated");
 });
